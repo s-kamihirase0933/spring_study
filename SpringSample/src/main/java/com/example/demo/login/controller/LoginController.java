@@ -21,4 +21,9 @@ public class LoginController{
 		//login.htmlに画面遷移
 		return "redirect:/home";
 	}
+	
+	@GetMapping("/test-error")
+	public String testError() {
+		throw new RuntimeException("テスト用の例外");
+	}
 }

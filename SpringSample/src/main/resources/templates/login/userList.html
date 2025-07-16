@@ -23,9 +23,9 @@
 					<td th:text="${user.userId}"></td>
 					<td th:text="${user.userName}"></td>
 					<!--ポイント１：日付型のフォーマット-->
-					<td th:text="${#dates.format(user.birthday,'YYYY/MM/dd')}"></td>
+					<td th:text="${#dates.format(user.birthday,'yyyy/MM/dd')}"></td>
 					<td th:text="${user.age}"></td>
-					<td th:text="${user.marriage}　?'既婚':'未婚'"></td>
+					<td th:text="${user.marriage} ? '既婚':'未婚'"></td>
 					<td>
 						<!--ポイント２：動的URL-->
 						<a class="btn btn-primary" th:href="@{'/userDetail/' + ${user.userId}}">

@@ -56,7 +56,23 @@ public class UserDaoJdbcImpl implements UserDao{
 	//Userテーブルのデータを1件取得
 	@Override
 	public User selectOne(String userId)throws DataAccessException{
-		return null;
+		//ポイント：1件取得
+		Map<String, Object>map = jdbc.queryForMap("SELECT * FROM m_user"
+				+ " WHERE user_id = ?"
+				  ,userId);
+		//結果返却用の変数
+		User user = new User();
+		
+		//取得したデータを結果返却用の変数にセットしていく
+		user.setUserId((String)map.get("user_id"));
+		user.setPassword((String)map.get("password"));
+		user.setUserName((String)map.get("user_name"));
+		user.setBirthday((Date)map.get("birthday"));
+		user.setAge((Integer)map.get("age"));
+		user.setMarriage((Boolean)map.get("marriage"));
+		user.setRole((String)map.get("role"));
+		
+		return user;
 	}
 	
 	//Userテーブルの全データを取得
@@ -93,13 +109,32 @@ public class UserDaoJdbcImpl implements UserDao{
 	//Userテーブルを1件更新
 	@Override
 	public int updateOne(User user)throws DataAccessException{
-		return 0;
+		
+		//1件更新
+		int rowNumber = jdbc.update("UPDATE M_USER"
+				+ " SET"
+				+ " password = ?,"
+				+ " user_name = ?,"
+				+ " birthday = ?,"
+				+ " age = ?,"
+				+ " marriage = ?"
+				+ " WHERE user_id = ?"
+				,user.getPassword()
+				,user.getUserName()
+				,user.getBirthday()
+				,user.getAge()
+				,user.isMarriage()
+				,user.getUserId());
+		
+		return rowNumber;
 	}
 	
 	//Userテーブルを1件削除
 	@Override
 	public int deleteOne(String userId)throws DataAccessException{
-		return 0;
+		int rowNumber = jdbc.update("DELETE FROM m_user WHERE user_id = ?", userId);
+		
+		return rowNumber;
 	}
 	
 	//Userテーブルの全データをCSVに出力する
